@@ -1,20 +1,21 @@
-// const mongoose = require("mongoose");
+    import mongoose from "mongoose";
+    
+    const UserSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    fullname: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    mobile: { type: String, required: true, unique: true },
+    skills: { type: [String], default: [] },
+    branch: { type: String, required: true },
+    year: { type: Number, required: true },
+    linkedin: { type: String }
+});
 
-// const schema=new mongoose.Schema({
-//     username:{type:String,required:true},
-//     fullname:{type:String,required:true},
-//     email:{type:String,required:true},
-//     password:{type:String,required:true},
-//     mobile:{type:String,required:true},
-//     skills:{type:String,required:true},
-//     branch:{type:String,required:true},
-//     year:{type:String,required:true},
-//     linkedin:{type:String,required:true},
-// });
+const User = mongoose.model("User", UserSchema);
+export default User; 
 
-// module.exports=mongoose.model("user",schema)
 
-import mongoose from "mongoose";
 
 // const UserSchema = new mongoose.Schema({
 //     username: { type: String, required: true, trim: true },
@@ -47,18 +48,3 @@ import mongoose from "mongoose";
 //         match: [/^https?:\/\/(www\.)?linkedin\.com\/.*$/, "Invalid LinkedIn URL"] 
 //     }
 // }, { timestamps: true }); // Adds createdAt and updatedAt fields
-const UserSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    fullname: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    mobile: { type: String, required: true, unique: true },
-    skills: { type: [String], default: [] },
-    branch: { type: String, required: true },
-    year: { type: Number, required: true },
-    linkedin: { type: String }
-});
-
-const User = mongoose.model("User", UserSchema);
-export default User; 
-
