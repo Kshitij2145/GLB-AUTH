@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +15,8 @@ const Signup = () => {
     linkedin: "",
   });
 
+  const navigate=useNavigate();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -25,10 +29,15 @@ const Signup = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+
+      const data = await response.json();
+
       if (response.ok) {
         alert("Signup successful!");
+        navigate("/");
       } else {
-        alert("Signup failed. Please try again.");
+        // Show actual error message from backend (e.g., duplicate email issue)
+        alert(data.error || "Signup failed. Please try again.");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -36,52 +45,118 @@ const Signup = () => {
     }
   };
 
+
   return (
     <div className="flex flex-col md:flex-row h-screen w-full bg-white shadow-lg overflow-hidden p-6 md:p-10">
       {/* Left Column */}
       <div className="md:w-1/2 w-full bg-pink-100 flex items-center justify-center sticky top-0 h-screen">
-        <img src="image2.png" alt="Logo" className="w-full h-full object-cover scale-95" />
+        <img
+          src="image2.png"
+          alt="Logo"
+          className="w-full h-full object-cover scale-95"
+        />
       </div>
 
       {/* Right Column */}
-      <div className="md:w-1/2 w-full p-12 flex flex-col items-center overflow-y-auto">
+      <div className="md:w-1/2 w-full  flex flex-col items-center overflow-y-auto">
         {/* Profile Picture Upload */}
         <div className="relative mb-4">
           <label htmlFor="profile-pic" className="cursor-pointer">
-            <img src="Profile image.png" alt="Upload Icon" className="w-28 h-28 rounded-full border-4 border-[rgb(255,51,102)] object-cover bg-gray-100" />
+            <img
+              src="Profile image.png"
+              alt="Upload Icon"
+              className="w-28 h-28 rounded-full border-4 border-[rgb(255,51,102)] object-cover bg-gray-100"
+            />
           </label>
-          <input type="file" id="profile-pic" className="hidden" accept="image/*" />
+          <input
+            type="file"
+            id="profile-pic"
+            className="hidden"
+            accept=".jpg, .jpeg, .png"
+          />
         </div>
-        
-        <h2 className="text-[rgb(255,51,102)] text-xl font-bold mb-4">Create Your Account</h2>
-        
+
+        <h2 className="text-[rgb(255,51,102)] text-xl font-bold mb-4">
+          Create Your Account
+        </h2>
+
         <form className="w-full max-w-md" onSubmit={handleSubmit}>
-          {[ 
-            { label: "Username", type: "text", id: "username", placeholder: "Your username" },
-            { label: "Full Name", type: "text", id: "fullname", placeholder: "Your full name" },
-            { label: "Official Email Address", type: "email", id: "email", placeholder: "Your email address" },
-            { label: "Password", type: "password", id: "password", placeholder: "Create a password" },
-            { label: "Mobile Number", type: "tel", id: "mobile", placeholder: "Your mobile number" },
-            { label: "Skills", type: "text", id: "skills", placeholder: "Your skills" },
-            { label: "Branch", type: "text", id: "branch", placeholder: "Your branch" },
-            { label: "Year of Study", type: "text", id: "year", placeholder: "Your current year" },
-            { label: "LinkedIn/GitHub Profile", type: "url", id: "linkedin", placeholder: "Your LinkedIn/GitHub profile" },
+          {[
+            {
+              label: "Username",
+              type: "text",
+              id: "username",
+              placeholder: "Your username",
+            },
+            {
+              label: "Full Name",
+              type: "text",
+              id: "fullname",
+              placeholder: "Your full name",
+            },
+            {
+              label: "Official Email Address",
+              type: "email",
+              id: "email",
+              placeholder: "Your email address",
+            },
+            {
+              label: "Password",
+              type: "password",
+              id: "password",
+              placeholder: "Create a password",
+            },
+            {
+              label: "Mobile Number",
+              type: "tel",
+              id: "mobile",
+              placeholder: "Your mobile number",
+            },
+            {
+              label: "Skills",
+              type: "text",
+              id: "skills",
+              placeholder: "Your skills",
+            },
+            {
+              label: "Branch",
+              type: "text",
+              id: "branch",
+              placeholder: "Your branch",
+            },
+            {
+              label: "Year of Study",
+              type: "text",
+              id: "year",
+              placeholder: "Your current year",
+            },
+            {
+              label: "LinkedIn/GitHub Profile",
+              type: "url",
+              id: "linkedin",
+              placeholder: "Your LinkedIn/GitHub profile",
+            },
           ].map(({ label, type, id, placeholder }) => (
             <div key={id} className="mb-4">
-              <label className="text-[rgb(255,51,102)] font-bold text-sm">{label}</label>
-              <input 
-                type={type} 
-                id={id} 
-                placeholder={placeholder} 
-                required 
-                className="w-full p-2 border border-pink-500 rounded-md  focus:border-[rgb(255,51,102)] focus:ring-[rgb(255,51,102)] focus:ring-2" 
-                value={formData[id]} 
-                onChange={handleChange} 
+              <label className="text-[rgb(255,51,102)] font-bold text-sm">
+                {label}
+              </label>
+              <input
+                type={type}
+                id={id}
+                placeholder={placeholder}
+                required
+                className="w-full p-2 border border-pink-500 rounded-md  focus:border-[rgb(255,51,102)] focus:ring-[rgb(255,51,102)] focus:ring-2"
+                value={formData[id]}
+                onChange={handleChange}
               />
             </div>
           ))}
 
-          <button type="submit" className="w-full p-3 mt-4 bg-[rgb(255,51,102)] text-white font-bold rounded-md hover:bg-[rgb(255,0,51)]">
+          <button
+            type="submit"
+            className="w-full p-3 mt-4 bg-[rgb(255,51,102)] text-white font-bold rounded-md hover:bg-[rgb(255,0,51)]"
+          >
             Sign Up
           </button>
         </form>
@@ -89,7 +164,10 @@ const Signup = () => {
         {/* Sign In Section */}
         <div className="mt-5 text-center text-sm text-[rgb(255,51,102)]">
           <p>
-            Already Have an Account? <a href="loginpage.html" className="font-bold hover:underline">Sign In</a>
+            Already Have an Account?{" "}
+            <Link to="/login" className="font-bold hover:underline">
+              Sign In
+            </Link>
           </p>
         </div>
       </div>
